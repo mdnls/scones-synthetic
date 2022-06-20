@@ -3,7 +3,7 @@
 **Score-based Generative Neural Networks for Large-Scale Optimal Transport**. ([on ArXiv](https://arxiv.org/abs/2110.03237)) <br />
 _Max Daniels, Tyler Maunu, Paul Hand_. 
 
-This repository contains code for running synthetic experiments, including those used to generate Table 2 (Gaussian to Gaussian BW-UVP scores) and Figure 4 (Gaussian to Swiss Roll transportation in 2D).
+This repository contains code for running synthetic experiments, including those used to generate Table 2 (Gaussian to Gaussian BW-UVP scores) and Figure 4 (Gaussian to Swiss Roll transportation in 2D). A sister repository, used to run all large-scale experiments, can be found [here](https://github.com/mdnls/scones)
 
 ## Setup
 The required packages can be found in `requirements.txt`. To create a new conda environment with these packages installed, use 

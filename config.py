@@ -36,7 +36,34 @@ class Config():
                  score_noise_final = 0.01,
                  scones_samples_per_source = 10,
                  seed=2039):
+        '''
+        Configuration file for qualitative transportation experiments.
 
+        :param name: name of these experiment, used to label pretrained models and exported artifacts.
+        :param source: (string) name of a dataset, one of ['2moon', 'circle', 'swiss-roll', 'gaussian']
+        :param target: (string) name of a dataset, one of ['2moon', 'circle', 'swiss-roll', 'gaussian']
+        :param l: regularization parameter (lambda). Coefficient of regularization term in the optimization objective used to train a compatibility function.
+        :param cpat_lr: learning rate for optimizing the compatibility function.
+        :param cpat_iters: number of gradient descent steps for optimizing the compatibility function.
+        :param cpat_bs: batch size for optimizing the compatibility function.
+        :param bproj_lr: learning rate for optimizing the barycentric projector.
+        :param bproj_iters: number of gradient descent steps for optimizing barycentric projector.
+        :param bproj_bs: batch size for optimizing barycentric projector.
+        :param score_lr: learning rate for optimizing the score based generative model.
+        :param score_iters: number of gradient descent steps for optimizing score based generative model.
+        :param score_bs: batch size for optimizing the score based generative model.
+        :param scones_iters: (for sampling Gaussians) number of iterations of (noiseless) Langevin dynamics used to sample.
+        :param scones_bs: number of independent samples to generate during scones sampling.
+        :param cov_samples: (for Gaussians) number of samples used to empirically estimate covariance
+        :param device: one of ['gpu', 'cpu'].
+        :param score_n_classes: (for non Gaussians) number of different noise levels used during annealing.
+        :param score_steps_per_class: (for non Gaussians) number of langevin iterations run per each fixed noise level.
+        :param score_sampling_lr: step size used during langevin dynamics.
+        :param score_noise_init: (for non Gaussians) initial noise level during Langevin sampling. Given the initial, final, and n_classes, the noise levels are chosen as the geometric series of n_classes terms whose first, last values are initial, final resp.
+        :param score_noise_final: (for non Gaussians) final noise level during Langevin sampling. Given the initial, final, and n_classes, the noise levels are chosen as the geometric series of n_classes terms whose first, last values are initial, final resp.
+        :param scones_samples_per_source: for each source sample, how many target samples to generate conditioned on that source
+        :param seed: optional fixed seed
+        '''
         self.name = name
 
         self.source_dist = resolve_dataset(source)
@@ -89,6 +116,30 @@ class GaussianConfig():
                  score_sampling_lr = 0.001,
                  seed=2039):
 
+        '''
+        Configuration file for sampling Gaussians and comparing BW-UVP in multiple dimensions.
+
+        :param name: name of these experiment, used to label pretrained models and exported artifacts.
+        :param source_cov: covariance matrix for the source Gaussian
+        :param target_cov: covariance matrix for the target Gaussian
+        :param scale_huh: if True, use regularization d*l instead of l, where d is the dimension and l is the input lambda (regularization parameter).
+        :param l: regularization parameter (lambda), coefficient on the regularization term on the compatibility optimization objective.
+        :param cpat_lr: learning rate for optimizing the compatibility function.
+        :param cpat_iters: number of gradient descent steps for optimizing the compatibility function.
+        :param cpat_bs: batch size for optimizing the compatibility function.
+        :param bproj_lr: learning rate for optimizing the barycentric projector.
+        :param bproj_iters: number of gradient descent steps for optimizing barycentric projector.
+        :param bproj_bs: batch size for optimizing barycentric projector.
+        :param scones_sampling_lr: step size used during langevin dynamics.
+        :param scones_iters: (for sampling Gaussians) number of iterations of (noiseless) Langevin dynamics used to sample.
+        :param scones_bs: number of independent samples to generate during scones sampling.
+        :param cov_samples: (for Gaussians) number of samples used to empirically estimate covariance
+        :param device: one of ['gpu', 'cpu'].
+        :param score_n_classes: (for non Gaussians) number of different noise levels used during annealing.
+        :param score_steps_per_class: (for non Gaussians) number of langevin iterations run per each fixed noise level.
+        :param score_sampling_lr: learning rate for optimizing the score based generative model.
+        :param seed: optional fixed seed
+        '''
         self.name = name
         self.source_cov = np.load(source_cov)
         self.source_dim = len(self.source_cov)
